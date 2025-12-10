@@ -3,8 +3,6 @@ import 'package:fruits_hub/core/utils/app_images.dart';
 import 'package:fruits_hub/core/utils/app_text_styles.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../best_selling_fruits/presentation/views/best_selling_view.dart';
-
 class ProductsViewHeader extends StatelessWidget {
   const ProductsViewHeader({super.key, required this.productsLength});
   final int productsLength;

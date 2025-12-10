@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fruits_hub/core/widgets/custom_button.dart';
 import 'package:fruits_hub/features/home/presentation/cubits/cart_cubit/cart_cubit.dart';
-import 'package:fruits_hub/features/home/presentation/cubits/cart_item_cubit/cart_item_cubit.dart';
-import 'package:fruits_hub/features/home/presentation/views/products_view.dart';
 import 'package:fruits_hub/features/home/presentation/views/widgets/car_items_list.dart';
 import 'package:fruits_hub/features/home/presentation/views/widgets/cart_header.dart';
-import 'package:fruits_hub/features/home/presentation/views/widgets/cart_item.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';

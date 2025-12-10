@@ -1,7 +1,5 @@
 // lib/features/profile/presentation/widgets/profile_menu_items.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fruits_hub/core/services/firebase_auth_service.dart';
 import 'package:fruits_hub/features/auth/presentation/views/signin_view.dart';
 
 class ProfileMenuItems extends StatelessWidget {

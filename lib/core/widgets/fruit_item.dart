@@ -5,7 +5,6 @@ import 'package:fruits_hub/core/utils/app_colors.dart';
 import 'package:fruits_hub/core/utils/app_text_styles.dart';
 import 'package:fruits_hub/core/widgets/custom_network_image.dart';
 import 'package:fruits_hub/features/home/presentation/cubits/cart_cubit/cart_cubit.dart';
-import 'package:fruits_hub/features/product_details/presentation/views/product_details_view.dart';
 
 class FruitItem extends StatelessWidget {
   const FruitItem({super.key, required this.productEntity});
@@ -14,83 +13,117 @@ class FruitItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        /// الانتقال لصفحة التفاصيل
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetailsView(product: productEntity),
-          ),
-        );
-      },
-      child: Container(
-        decoration: ShapeDecoration(
-          color: const Color(0xFFF3F5F7),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.favorite_outline),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: ShapeDecoration(
+        color: const Color(0xFFF3F5F7),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      child: Stack(
+        children: [
+          // Favorite Icon
+          Positioned(
+            top: 8,
+            right: 8,
+            child: IconButton(
+              onPressed: () {
+                // TODO: Add to wishlist
+              },
+              icon: const Icon(
+                Icons.favorite_outline,
+                color: Colors.grey,
+                size: 24,
               ),
             ),
-            Positioned.fill(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  productEntity.imageUrl != null
-                      ? Flexible(
-                          child: CustomNetworkImage(
-                            imageUrl: productEntity.imageUrl!,
+          ),
+
+          // Main Content
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // Product Image
+                Expanded(
+                  child: Center(
+                    child: productEntity.imageUrl != null
+                        ? CustomNetworkImage(imageUrl: productEntity.imageUrl!)
+                        : Container(
+                            height: 120,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.image,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
                           ),
-                        )
-                      : Container(color: Colors.grey, height: 100, width: 100),
-                  const SizedBox(height: 24),
-                  ListTile(
-                    title: Text(
-                      productEntity.name,
-                      textAlign: TextAlign.right,
-                      style: TextStyles.semiBold16,
-                    ),
-                    subtitle: Text.rich(
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Name
+                Text(
+                  productEntity.name,
+                  textAlign: TextAlign.right,
+                  style: TextStyles.semiBold16,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                const SizedBox(height: 8),
+
+                // Price
+                Text.rich(
+                  TextSpan(
+                    children: [
                       TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${productEntity.price} جنية ',
-                            style: TextStyles.bold13.copyWith(
-                              color: AppColors.secondaryColor,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '/ كيلو',
-                            style: TextStyles.semiBold13.copyWith(
-                              color: AppColors.lightSecondaryColor,
-                            ),
-                          ),
-                        ],
+                        text: '${productEntity.price} جنية ',
+                        style: TextStyles.bold16.copyWith(
+                          color: AppColors.primaryColor,
+                        ),
                       ),
-                      textAlign: TextAlign.right,
-                    ),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        context.read<CartCubit>().addProduct(productEntity);
-                      },
-                      child: const CircleAvatar(
-                        backgroundColor: AppColors.primaryColor,
-                        child: Icon(Icons.add, color: Colors.white),
+                      TextSpan(
+                        text: '/ كيلو',
+                        style: TextStyles.semiBold13.copyWith(
+                          color: AppColors.lightSecondaryColor,
+                        ),
                       ),
+                    ],
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+
+                const SizedBox(height: 12),
+
+                // Add to Cart Button
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<CartCubit>().addProduct(productEntity);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('تم إضافة المنتج للسلة'),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                    child: const CircleAvatar(
+                      radius: 20,
+                      backgroundColor: AppColors.primaryColor,
+                      child: Icon(Icons.add, color: Colors.white, size: 28),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

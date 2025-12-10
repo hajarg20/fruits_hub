@@ -64,7 +64,7 @@ class FirebaseAuthService {
         password: password,
       );
       return credential.user!;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       throw CustomException(message: 'البريد أو الرقم السري غير صحيح.');
     }
   }
@@ -73,8 +73,9 @@ class FirebaseAuthService {
   Future<User> signInWithGoogle() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null)
+      if (googleUser == null) {
         throw CustomException(message: 'تم إلغاء العملية.');
+      }
 
       final googleAuth = await googleUser.authentication;
 
